@@ -1,0 +1,81 @@
+﻿@model IEnumerable<NetNote.Models.Note.NoteModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="AddNote">Create New Note</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OpUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OpTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpUser)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditNote", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "DeleteNote", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+        <tr>
+            <td>
+                <div>@string.Format("当前第【{0}】页，共【{1}】页", ViewBag.PageIndex, ViewBag.PageCount)</div>
+            </td>
+            <td>
+                @{
+                    int pageCount = Convert.ToInt32(ViewBag.PageCount);
+                    for (int pIndex = 0; pIndex < pageCount; pIndex++)
+                    {
+                        @Html.ActionLink((pIndex + 1).ToString(), "Index", new { pageIndex = pIndex + 1 });
+                    }
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>

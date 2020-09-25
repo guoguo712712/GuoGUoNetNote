@@ -1,0 +1,23 @@
+
+
+AipService操作说明
+1）Windows服务程序：AipService.exe
+     AipService.exe管理程序：AipServiceConfig.exe
+【AipServiceConfig.exe】程序提供对【AipService.exe】的安装、卸载、启动、停止操作，请根据命令提示进行操作
+2）Jeppsen生效日期监控注意修改配置文件AipService.exe.config
+     <workUnit dll="JeppesenEffectRemindLib" parameters="http://localhost:57518/handles/AipService/AcceptNotice.ashx;1;00:10" sort="0" />
+    parameters格式：<服务地址>;<LoginUserID>;<监控时间>
+             <服务地址>：在BS程序中接受通知消息的地址，目前格式如http://10.10.34.3:80/handles/AipService/AcceptNotice.ashx
+             <LoginUserID>：发送通知消息使用的BS用户，注意需要保证BS中存在此用户
+             <监控时间>：表示每天几点几分开始检查是否有需要发送通知的检查单，默认为0点10分
+
+AipService增加其他监控功能
+AipService是以模块的形式维护多个功能，目前用来监控Jeppsen生效日期，如果需要，后续可以增加其他监控功能，方法为：
+<1>参照【WorkUnit/JeppesenEffectRemindLib】，实现一个新类库	   
+<2>新类库中需要实现一个实现接口【IWorkUnit】的类
+<3>在此AipService配置文件AipService.exe.config中增加类似配置：
+	    <workUnit dll="JeppesenEffectRemindLib" parameters="http://localhost:57518/handles/AipService/AcceptNotice.ashx;1;00:10" sort="0"/>
+		【dll】新类库名称
+		【parameters】IWorkUnit.Start()方法中使用的参数，可为空
+		【Sort】相对其他的启动顺序，默认或未设置时为-1
+

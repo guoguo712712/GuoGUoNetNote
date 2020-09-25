@@ -1,0 +1,81 @@
+﻿@model NetNote.Models.Note.NoteModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NoteModel</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OpUser)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OpTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OpTime)
+        </dd>
+    </dl>
+    <script>
+                   function ShowFile() {
+                       if (@Model.Password!= document.getElementById("pwd").attributes("value")) {
+                           document.getElementById("divFile").attr('display') = 'none';
+                       }
+                       else {
+                           document.getElementById("divFile").attr('display') = 'normal';
+                       }
+
+                   }
+    </script>
+    @if (ViewBag.File != null)
+    {
+        <label>请输入密码查看文件：</label>
+        <input id="pwd" type="password" />
+        <input id="btnShowFile" type="button" onclick="ShowFile()" value="查看文件" />
+
+        <div id="divFile" display="none">
+            <a id="fileLink" href="@ViewBag.File">File</a>
+        </div>
+        
+    }
+
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    <a asp-action="Index">Back to List</a>
+</div>
